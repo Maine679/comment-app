@@ -41,4 +41,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+
+    public function commentsUserRate()
+    {
+        return $this->hasMany(CommentsUsersRate::class, 'user_id');
+    }
+
+    public function files()
+    {
+        return $this->morphMany(Files::class, 'fileable');
+    }
 }

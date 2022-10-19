@@ -4,7 +4,6 @@ import { Head } from '@inertiajs/inertia-vue3';
 import Comment from "@/Pages/Comment.vue";
 
 </script>
-
 <template>
     <Head title="Dashboard" />
 
@@ -15,8 +14,21 @@ import Comment from "@/Pages/Comment.vue";
             </h2>
         </template>
 
-        <comment/>
+        <comment
+            :propComment="comment"
+        />
 
 
     </AuthenticatedLayout>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            comment: {
+                rate: 3,
+            },
+        }
+    }
+}
+</script>

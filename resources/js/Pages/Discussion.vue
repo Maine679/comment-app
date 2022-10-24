@@ -4,9 +4,8 @@ import { Head } from '@inertiajs/inertia-vue3';
 import Comment from "@/Pages/Comment.vue";
 
 </script>
-
 <template>
-    <Head title="Dashboard" />
+    <Head title="Discussion" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -15,8 +14,21 @@ import Comment from "@/Pages/Comment.vue";
             </h2>
         </template>
 
-        <comment/>
+        <comment
+            v-for="item in this.comments"
+            :key="item.id"
+            :propComment="item"
+        />
 
 
     </AuthenticatedLayout>
 </template>
+<script>
+export default {
+    props: {
+        comments: null,
+    },
+    data() {
+    }
+}
+</script>

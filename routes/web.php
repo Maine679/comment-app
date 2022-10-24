@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,10 +30,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/discussions', function () {
-    $test = ['test1','test2','test3','test4','test5','test6','t','test6','test6'];
-    return Inertia::render('Discussion', compact('test'));
-})->middleware(['auth', 'verified'])->name('discussions');
+Route::get('/discussions', [ CommentsController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('discussions');
+
+Route::post('/discussions', [ CommentsController::class, 'create'])
+    ->middleware(['auth', 'verified']);
+
+Route::post('/comments/more/{id}', [ CommentsController::class, 'more'])->name('comments.more')
+    ->middleware(['auth', 'verified']);
 
 
 

@@ -5,7 +5,7 @@ import Comment from "@/Pages/Comment.vue";
 
 </script>
 <template>
-    <Head title="Dashboard" />
+    <Head title="Discussion" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -15,7 +15,9 @@ import Comment from "@/Pages/Comment.vue";
         </template>
 
         <comment
-            :propComment="comment"
+            v-for="item in this.comments"
+            :key="item.id"
+            :propComment="item"
         />
 
 
@@ -23,12 +25,10 @@ import Comment from "@/Pages/Comment.vue";
 </template>
 <script>
 export default {
+    props: {
+        comments: null,
+    },
     data() {
-        return {
-            comment: {
-                rate: 3,
-            },
-        }
     }
 }
 </script>

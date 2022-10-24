@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('comment_id')->nullable();
-            $table->string('test', 2048)->nullable();
+            $table->string('text', 2048)->nullable();
             $table->integer('rate')->nullable();
             $table->timestamps();
 

@@ -1,32 +1,73 @@
 <template>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="p-3">
+        <div class="lg:max-w-[100rem] mx-auto sm:pl-6 lg:pl-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-3 bg-gray-100 border-b border-gray-200">
+                <div class="p-1 bg-gray-100 border-b border-gray-200">
                    <b>Comment</b>
-                    <div>NickName</div>
-                    <div>20.06.22 в 22.40</div>
-                    <div>{{ propComment['rate'] }}</div>
+                    <div>Author: {{propComment.user.name}}</div>
+                    <div>Create: {{propComment.created_at}}</div>
+                    <div>Id: {{propComment.id}}</div>
+                    <div>Rate: {{propComment.rate}}</div>
                     <button>#</button>
                 </div>
-                <div class="p-3 border-b border-gray-200">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cum error laboriosam, odit quam quisquam quod repellat repudiandae sint sunt veritatis voluptatem voluptatibus. Ad culpa et reiciendis saepe tempora velit.
+                <div class="p-2 border-b border-gray-200">
+                   {{propComment.text}}
                 </div>
             </div>
+
+            <div
+                v-for="item in this.comments"
+            >
+                <comment
+                    v-for="item in this.comments"
+                    v-if="item.user"
+                    :key="item.id"
+                    :propComment="item"
+                />
+
+                <button
+                    v-else
+                    @click.prevent="commentMore(route('comments.more', this.propComment.id))"
+                >
+                    More comments
+                </button>
+
+            </div>
         </div>
+
     </div>
 </template>
 <script>
+
 export default {
-    props: {
-        propComment: {
-            type: Array,
-            default: {
-                'rate': 0,
-            },
-        },
+    components: {
     },
+    props: [
+        'propComment',
+    ],
     data() {
+        return {
+            comments: this.propComment.comments || null,
+            // comments2: 22,
+        }
+    },
+    methods: {
+        async commentMore(link) {
+
+            axios.post(link, {
+            }).then((response) => {
+                this.comments = response.data.comments
+
+            }).catch(function (errors) {
+                console.log('errors')
+                console.log(errors)
+            });
+
+        }
+    },
+    created() {
+      // console.log(this.comments2)
     }
+
 }
 </script>
